@@ -1,24 +1,26 @@
 # Quiz Master
 
 ## Technologies
-- Server
+- `server/`
   - Ruby on Rails
-- Client
+- `client/`
   - ReactJS
   - Redux
   - Jest
 
 ## Server
 
+Go to the `server/` directory
 ```
 cd server/
 ```
 
+Install the gems
 ```
 bundle
 ```
 
-Create the databse first
+Create the database first
 ```
 bin/rails db:create
 ```
@@ -35,6 +37,7 @@ bin/rails server
 
 ## Client
 
+Go the `client/` directory
 ```
 cd client/
 ```
