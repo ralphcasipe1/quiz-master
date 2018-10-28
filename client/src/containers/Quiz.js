@@ -59,7 +59,7 @@ class Quiz extends Component {
 
   render() {
     const { open, questions } = this.state
-    
+
     return (
       <Fragment>
         <SummaryModal
@@ -67,7 +67,6 @@ class Quiz extends Component {
           open={open}
           questions={questions}
         />
-
         {paginate(this.state.questions, 1, this.state.page)
           .map((question, index) => (
             <QuizCard
