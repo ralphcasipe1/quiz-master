@@ -8,9 +8,9 @@ import ListItemText from '@material-ui/core/ListItemText'
 import Modal from '@material-ui/core/Modal';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
+import DangerousHTML from './DangerousHTML'
 import checkAnswer from '../helpers/checkAnswer'
 import { styles } from '../helpers/styles'
-
 
 const SummaryModal = ({
   classes,
@@ -31,7 +31,7 @@ const SummaryModal = ({
           return (
             <ListItem key={question.id} color="primary">
               <ListItemText>
-                Q: {question.content}
+                <DangerousHTML content={question.content} />
                 
                 <Typography variant="h6">
                   Your Answer: {question.userAnswer}
