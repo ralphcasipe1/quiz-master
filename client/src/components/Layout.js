@@ -1,19 +1,19 @@
 import React, { Fragment } from 'react'
-import PropTypes from 'prop-types'
+import { withRouter } from 'react-router-dom'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import AppBar from './AppBar'
-import Footer from './Footer'
 import Main from './Main'
 
-export default ({ children }) =>  (
+const Layout = ({ children, location: { pathname } }) => (
   <Fragment>
     <CssBaseline />
-    <AppBar />
+    
+    <AppBar location={pathname}/>
     
     <Main>
       {children}
     </Main>
-
-    <Footer />  
   </Fragment>
 )
+
+export default withRouter(Layout)
