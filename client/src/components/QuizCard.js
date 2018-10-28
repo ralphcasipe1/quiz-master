@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import { styles } from '../helpers/styles'
 import CardAction from './CardAction'
+import DangerousHTML from './DangerousHTML'
 
 export const QuizCard = ({ 
   classes,
@@ -27,7 +28,7 @@ export const QuizCard = ({
       <center>
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            {question.content}
+            <DangerousHTML content={question.content} />
           </Typography>
 
           <TextField
