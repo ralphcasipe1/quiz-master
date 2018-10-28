@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
 import TextField from '@material-ui/core/TextField';
+import RichTextEditor from 'react-rte'
+
 import { 
   addQuestion, 
   updateQuestion,
@@ -12,31 +14,58 @@ import {
 } from '../actions/questions'
 import { styles } from '../helpers/styles'
 
-class TextFieldModal extends React.Component {
+class TextFieldModal extends Component {
   state = {
-    content: '',
+    content: RichTextEditor.createEmptyValue(),
     answer: ''
   }
+  
+  onChange = content => {    
+    this.setState({content});
+    if (this.props.onChange) {
+
+      this.props.onChange(
+        content.toString('html')
+      );
+    }
+  };
 
   handleChange = event => 
     this.setState({ [event.target.name]: event.target.value })
 
   handleSubmit = event => {
     event.preventDefault()
-    
-    if (this.props.question) {
-      this.props.updateQuestion(
-        this.props.question.id, 
-        this.state
+
+    const { 
+      addQuestion,
+      onClose,
+      updateQuestion, 
+      question
+    } = this.props
+
+    const {
+      content,
+      answer
+    } = this.state
+
+    if (question) {
+      updateQuestion(
+        question.id, 
+        {
+          content: content.toString('html'),
+          answer
+        }
       )
     } else {
-      console.log(this.state)
-      this.props.addQuestion(this.state)
+      addQuestion({
+        content: content.toString('html'),
+        answer
+      })
     }
     
-    this.setState({content: ''})
+    this.setState({content: RichTextEditor.createEmptyValue()})
     
-    this.props.onClose()
+    onClose()
   }
 
   componentDidUpdate(prevProps) {
@@ -51,7 +80,7 @@ class TextFieldModal extends React.Component {
 
     if (prevProps.question && !this.props.question) {
       this.setState({
-        content: '',
+        content: RichTextEditor.createEmptyValue(),
         answer: ''
       })
     }
@@ -79,20 +108,9 @@ class TextFieldModal extends React.Component {
             The Question
           </Typography>
           
-          <TextField
-            autoFocus
-            fullWidth
-            multiline
-            name="content"
-            rows="5"
-            rowsMax="6"
+          <RichTextEditor
             value={this.state.content}
-            placeholder="How many countries in the world?"
-            onChange={this.handleChange}
-            className={classes.textField}
-            margin="normal"
-            helperText="Please enter the question you want to ask"
-            variant="outlined"
+            onChange={this.onChange}
           />
 
           <Typography variant="h6">
