@@ -6,37 +6,42 @@ module Api::V1
     def index
       @questions = Question.all
   
-      render json: @questions
+      json_response(@questions)
     end
   
     # GET /questions/1
     def show
-      render json: @question
+      json_response(@question)
     end
   
     # POST /questions
     def create
-      @question = Question.new(question_params)
-  
-      if @question.save
-        render json: @question, status: :created, location: @question
-      else
-        render json: @question.errors, status: :unprocessable_entity
-      end
+      @question = Question.create!(question_params)
+      
+      json_response(@question, :created)
+      # if @question.save
+      #   render json: @question, status: :created, location: @question
+      # else
+      #   render json: @question.errors, status: :unprocessable_entity
+      # end
     end
   
     # PATCH/PUT /questions/1
     def update
-      if @question.update(question_params)
-        render json: @question
-      else
-        render json: @question.errors, status: :unprocessable_entity
-      end
+      @question.update(question_params)
+
+      json_response(@question)
+      # if @question.update(question_params)
+      #   render json: @question
+      # else
+      #   render json: @question.errors, status: :unprocessable_entity
+      # end
     end
   
     # DELETE /questions/1
     def destroy
       @question.destroy
+      head :no_content
     end
   
     private
@@ -47,7 +52,7 @@ module Api::V1
   
       # Only allow a trusted parameter "white list" through.
       def question_params
-        params.require(:question).permit(:content, :answer)
+        params.permit(:content, :answer)
       end
   end  
 end
