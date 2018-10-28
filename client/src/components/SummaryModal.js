@@ -8,7 +8,9 @@ import ListItemText from '@material-ui/core/ListItemText'
 import Modal from '@material-ui/core/Modal';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
+import checkAnswer from '../helpers/checkAnswer'
 import { styles } from '../helpers/styles'
+
 
 const SummaryModal = ({
   classes,
@@ -43,7 +45,7 @@ const SummaryModal = ({
                 
               </ListItemText>
               <ListItemSecondaryAction>
-                {question.answer === question.userAnswer
+                {!!checkAnswer(question.answer, question.userAnswer)//question.answer === question.userAnswer
                   ? <DoneIcon color="primary" fontSize="large" />
                   : <ClearIcon color="error" fontSize="large" />
                 }                      
