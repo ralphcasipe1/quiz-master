@@ -6,6 +6,8 @@ import ListItemText from '@material-ui/core/ListItemText'
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Typography from '@material-ui/core/Typography'
+import DangerousHTML from './DangerousHTML'
+import toISODate from '../helpers/toISODate'
 
 export default ({ 
   question, 
@@ -15,7 +17,7 @@ export default ({
   <ListItem>
     <ListItemText>
       <Typography variant="title" color="primary">
-        Q: {question.content}
+        <DangerousHTML content={question.content} />
       </Typography>
       <Typography variant="title">
         A: {question.answer}
@@ -24,7 +26,7 @@ export default ({
         variant="subtitle1" 
         color="textSecondary"
       >
-        {question.created_at}
+        {toISODate(question.created_at)}
       </Typography>
     </ListItemText>
     <ListItemSecondaryAction>
